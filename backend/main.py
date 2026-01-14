@@ -1,20 +1,13 @@
 from fastapi import FastAPI
+from app.db.neo4j import run_cypher
 
-app = FastAPI(
-    title="LawAI Backend",
-    description="Backend API for GraphRAG-based legal compliance system",
-    version="0.1.0"
-)
+app = FastAPI()
 
 @app.get("/")
-def root():
-    return {
-        "status": "ok",
-        "message": "LawAI backend is running on Render"
-    }
+def health():
+    return {"status": "ok"}
 
-@app.get("/health")
-def health_check():
-    return {
-        "health": "ok"
-    }
+@app.get("/neo4j/ping")
+def neo4j_ping():
+    rows = run_cypher("RETURN 1 AS ok")
+    return {"neo4j": rows[0]["ok"]}
