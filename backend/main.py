@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.db.neo4j import run_cypher
+from backend.app.db.neo4j import run_cypher
 
 app = FastAPI()
 
